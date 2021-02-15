@@ -1,48 +1,23 @@
 import React, { Component } from 'react';
+import TableRow from '@material-ui/core/TableRow';
+import TableCell from '@material-ui/core/TableCell';
+import TableHead from '@material-ui/core/TableHead';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+
+
 
 class Customer extends Component{
     render(){
-        const customer = 
-        [
-            {
-            'id':'1',
-            'image':'https://placeimg.com/64/64/1',
-            'name':'김환승',
-            'birthday':'960703',
-            'gender':'남자',
-            'job':'회사원'
-        },
-        {
-            'id':'2',
-            'image':'https://placeimg.com/64/64/2',
-            'name':'김환승',
-            'birthday':'960703',
-            'gender':'남자',
-            'job':'회사원'
-        },
-        {
-            'id':'3',
-            'image':'https://placeimg.com/64/64/3',
-            'name':'김환승',
-            'birthday':'960703',
-            'gender':'남자',
-            'job':'회사원'
-        }
-    ]
         return(
-            <div>
-                {
-                    customer.map(c => {
-                        return(
-                        <div>
-                        <CustomerProfile id={c.id} image={c.image} name={c.name}/>
-                        <CustomerInfo birthday={c.birthday} gender={c.gender} job={c.job} />
-                        </div>);
-
-                    })
-                }
-                
-            </div>
+            <TableRow>
+                <TableCell>{this.props.id}</TableCell>
+                <TableCell><img src={this.props.image} alt="profile"/></TableCell>
+                <TableCell>{this.props.name}</TableCell>
+                <TableCell>{this.props.birthday}</TableCell>
+                <TableCell>{this.props.gender}</TableCell>
+                <TableCell>{this.props.job}</TableCell>
+            </TableRow>
         )
     }
 }
