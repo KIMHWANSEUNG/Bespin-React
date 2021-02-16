@@ -1,4 +1,4 @@
-import { TableBody, TableCell, TableHead ,TableRow,Table,Paper} from '@material-ui/core';
+import { TableBody, TableCell, TableHead ,TableRow,Table,Paper, CircularProgress} from '@material-ui/core';
 import React from 'react'
 import { Component } from 'react';
 import Customer from './components/Cusomer.js'
@@ -12,17 +12,22 @@ const styles = theme => ({
     },
     table:{
         minWidth:1080
+    },
+    progress:{
+        margin: theme.spacing.unit*2
     }
+    
 })
 
 
 class Home extends Component{
-
     state = {
-        customers: ""
+        customers: "",
+        completed: 0
     }
 
     componentDidMount(){
+        this.timer =  setInterval(this.progress, 20);
         this.callApi()
         .then(res => this.setState({customers: res}))
         .catch(err => console.log(err));
@@ -32,6 +37,12 @@ class Home extends Component{
         const response = await fetch('/api/customers');
         const body = await response.json();
         return body;
+    }
+
+    //프로그래스바
+    progress = () => {
+        const { completed } = this.state;
+        this.setState({ completed: completed >= 100 ? 0 : completed + 1 });
     }
 
     render(){
@@ -64,7 +75,11 @@ class Home extends Component{
                                 />
                             );
                         })
-                        :""
+                        : <TableRow>
+                            <TableCell colSpan="6" align="center">
+                                <CircularProgress className={classes.progress} variant="determinate" value={this.state.completed} />
+                            </TableCell>
+                        </TableRow>
                         }
                     </TableBody>
                 </Table>
